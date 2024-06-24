@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
+}
+enum UserRole{
+  DOCTOR
+  NURSE
+  PATIENT
+  STAFF
+}
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole ? 
+  accounts      Account[]
+  Patient       Patient[]
+  doctor        Doctor[]
+  nurse         Nurse[]
+  staff         Staff[]
+}
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
+model Doctor {
+  id                   String  @id @default(cuid())
+  userId               String
+  fullname             String
+  dob                  String
+  gender               String
+  phone                String
+  address              String
+  medicalLicenseNumber String
+  specialization       String
+  yearsOfExperience    String
+  user                 User     @relation(fields: [userId], references: [id])
+  doctorsReport        Doctorsreport []
+  medication           Medications   []
+}
+
+model Nurse {
+  id                 String  @id @default(cuid())
+  userId             String
+  fullname           String
+  dob                String
+  gender             String
+  phone              String
+  address            String
+  nursingLicenseNumber String
+  department           String
+  yearsOfExperience    String
+  user               User     @relation(fields: [userId], references: [id])
+  injection         Injection[]
+}
+
+model Staff {
+  id          String  @id @default(cuid())
+  userId      String
+  fullname    String
+  dob         String
+  gender      String
+  phone       String
+  address     String
+  position    String
+  department  String
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model Patient {
+  id          String  @id @default(cuid())
+  userId      String
+  fullname    String
+  dob         String
+  gender      String
+  admitted    Boolean
+  phone       String
+  address     String
+  nextofkin   String
+  nextofphone String
+  user        User   @relation(fields: [userId], references: [id])
+  doctorsReport Doctorsreport []
+  appointment   Appointment[]
+  medication    Medications[]
+  injection     Injection[]
+}
+
+model Doctorsreport {
+id                  String @id @default(cuid())
+date                DateTime
+symptoms            String
+diagnosis           String
+labtest             String ?
+labtestresult       String ?
+prescription        String?
+patientId           String
+patient             Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+docId               String
+doctor  Doctor @relation(fields: [docId], references: [id], onDelete: Cascade)
+}
+
+model Appointment {
+  id              String @id @default(cuid())
+  day             DateTime
+  time            String
+  daytime         String?
+  note            String
+  patientId       String
+  patient         Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+}
+
+model Medications {
+  id              String @id @default(cuid())
+  medication      String
+  date            DateTime
+  patientId          String
+  docId           String
+  patient         Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor          Doctor @relation(fields: [docId], references: [id], onDelete: Cascade)
+}
+model Injection {
+  id              String @id @default(cuid())
+  injection       String
+  date            DateTime
+  patientId       String
+  nurseId         String
+  patient         Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  nurse           Nurse @relation(fields: [nurseId], references: [id], onDelete: Cascade)
+}
