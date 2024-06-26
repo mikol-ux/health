@@ -29,7 +29,6 @@ import { Create_Profile } from "@/actions/createprofile";
 import { FormSucces } from "@/components/form-succes";
 import { FormError } from "@/components/form-error";
 import { useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -51,7 +50,6 @@ export default async function RootLayout({
         <body className={inter.className}>
           {/* <Navbar /> */}
           <div>{children}</div>
-          <Footer />
         </body>
       </html>
     </SessionProvider>
