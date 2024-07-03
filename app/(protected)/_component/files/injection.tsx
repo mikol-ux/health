@@ -80,7 +80,7 @@ export default function Injection({
   nurseId,
 }: prop) {
   return (
-    <>
+    <div key={id}>
       <Drawer>
         <DrawerTrigger>
           <div className="text-center flex flex-col justify-center items-center">
@@ -97,11 +97,19 @@ export default function Injection({
             <Button>Close</Button>
           </DrawerClose>
           {/* Your drawer content with potentially scrollable elements */}
-          <div className="overflow-y-auto max-h-screen">
-            <p className="text-4xl font-extrabold">{injection}</p>
+          <div className="list-disc pl-5">
+            <div className="mb-2">
+              <p>
+                <strong>Medication:</strong> {injection}
+              </p>
+              <p>
+                <strong>Date Given:</strong>{" "}
+                {new Date(date).toLocaleDateString()}
+              </p>
+            </div>
           </div>
         </DrawerContent>
       </Drawer>
-    </>
+    </div>
   );
 }

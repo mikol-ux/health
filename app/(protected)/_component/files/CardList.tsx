@@ -33,11 +33,13 @@ export default function CardList({ data }: { data: Patient[] }) {
         </TableHeader>
         <TableBody>
           {data.map((p) => (
-            <TableRow className="text-xs p-0">
-              <TableCell className="font-medium">{p.fullname}</TableCell>
-              <TableCell>{p.dob}</TableCell>
-              <TableCell>{p.gender}</TableCell>
-              <TableCell>
+            <TableRow className="text-xs py-2 px-8">
+              <TableCell className="font-medium py-2 px-8">
+                {p.fullname}
+              </TableCell>
+              <TableCell className="py-2 px-8">{p.dob}</TableCell>
+              <TableCell className="py-2 px-8">{p.gender}</TableCell>
+              <TableCell className="py-2 px-8">
                 <p
                   className={`${
                     p.admitted === true ? "bg-green-500" : "bg-red-500"
@@ -46,12 +48,16 @@ export default function CardList({ data }: { data: Patient[] }) {
                   {p.admitted === true ? "admitted" : "not admitted"}
                 </p>
               </TableCell>
-              <TableCell>
-                <Button variant="destructive" onClick={() => deleteUser(p.id)}>
+              <TableCell className="py-2 px-8">
+                <Button
+                  variant="destructive"
+                  onClick={() => deleteUser(p.id)}
+                  className="py-2 px-4 text-md"
+                >
                   Delete
                 </Button>
               </TableCell>
-              <TableCell>
+              <TableCell className="py-2 px-8">
                 <Button variant="ghost">
                   <Link href={`/patient/${p.id}?tab=profile`}>
                     View medical history

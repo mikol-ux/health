@@ -57,7 +57,7 @@ const Patient = async ({
               medical Record
             </Link>
           </TabsTrigger>
-          <TabsTrigger value="medications">
+          {/* <TabsTrigger value="medications">
             <Link
               href={{
                 query: {
@@ -67,7 +67,7 @@ const Patient = async ({
             >
               medications
             </Link>
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger value="injection">
             <Link
               href={{
@@ -121,19 +121,21 @@ const Patient = async ({
           </div>
         </TabsContent>
         <TabsContent value="medicalrecord" className="">
-          <Link
-            href={`/medical_record/${params.id}`}
-            className="flex items-center justify-center "
-          >
-            <Button>Creat new file</Button>
-          </Link>
+          <div className="">
+            <Link
+              href={`/medical_record/${params.id}`}
+              className="flex items-center justify-center "
+            >
+              <Button>Creat new file</Button>
+            </Link>
+          </div>
           <div className="grid grid-cols-5 gap-4 content-center">
             {doctorsreport.map((med) => (
               <Doctors_Report {...med} />
             ))}
           </div>
         </TabsContent>
-        <TabsContent value="medications">
+        {/* <TabsContent value="medications">
           <Link
             href={`/medication/${params.id}`}
             className="flex items-center justify-center "
@@ -145,7 +147,7 @@ const Patient = async ({
               <Medical_report {...med} />
             ))}
           </div>
-        </TabsContent>
+        </TabsContent> */}
         <TabsContent value="injection">
           <Link
             href={`/injection/${params.id}`}

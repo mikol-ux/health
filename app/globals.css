@@ -57,3 +57,8 @@
     @apply bg-background text-foreground;
   }
 }
+@layer utilities {
+  .heading {
+    @apply font-bold text-4xl md:text-5xl text-center;
+  }
+}

@@ -88,18 +88,38 @@ export default function Doctors_Report({
 
         <DrawerContent className="w-[800px] h-screen mx-auto p-8">
           <DrawerHeader>
-            <DrawerTitle>injections</DrawerTitle>
+            <DrawerTitle>Doctors Report</DrawerTitle>
           </DrawerHeader>
           <DrawerClose>
             <Button>Close</Button>
           </DrawerClose>
           {/* Your drawer content with potentially scrollable elements */}
-          <div className="overflow-y-auto max-h-screen">
-            <p className="text-4xl font-extrabold">{symptoms}</p>
-            <p className="text-4xl font-extrabold">{diagnosis}</p>
-            <p className="text-4xl font-extrabold">{labtest}</p>
-            <p className="text-4xl font-extrabold">{labtestresult}</p>
-            <p className="text-4xl font-extrabold">{prescription}</p>
+          <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Doctor's Report</h1>
+            <p className="mb-4">
+              <strong>Date:</strong> {new Date(date).toLocaleDateString()}
+            </p>
+            <p className="mb-4">
+              <strong>Symptoms:</strong> {symptoms}
+            </p>
+            <p className="mb-4">
+              <strong>Diagnosis:</strong> {diagnosis}
+            </p>
+            {labtest && (
+              <p className="mb-4">
+                <strong>Lab Test:</strong> {labtest}
+              </p>
+            )}
+            {labtestresult && (
+              <p className="mb-4">
+                <strong>Lab Test Result:</strong> {labtestresult}
+              </p>
+            )}
+            {prescription && (
+              <p className="mb-4">
+                <strong>Prescription:</strong> {prescription}
+              </p>
+            )}
           </div>
           <div>
             <DrawerClose>
