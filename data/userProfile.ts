@@ -33,10 +33,10 @@ export const getNurseByuserId = async (nurseId: string) => {
     return null; // {error:"null"}
   }
 };
-export const getStaffByuserId = async (nurseId: string) => {
+export const getStaffByuserId = async (staffId: string) => {
   try {
     const profile = await db.staff.findFirst({
-      where: { userId: nurseId },
+      where: { userId: staffId },
     });
     // console.log(profile);
     return profile;
@@ -44,10 +44,10 @@ export const getStaffByuserId = async (nurseId: string) => {
     return null; // {error:"null"}
   }
 };
-export const getPatientByuserId = async (nurseId: string) => {
+export const getPatientByuserId = async (patientId: any) => {
   try {
     const profile = await db.patient.findFirst({
-      where: { userId: nurseId },
+      where: { userId: patientId },
     });
     // console.log(profile);
     return profile;

@@ -36,6 +36,7 @@ export const TimeSchema = z.object({
   time: z.string().min(1, { message: "Appointment time is needed" }),
   dateTime: z.optional(z.string()),
   note: z.string().min(6, { message: "minimum 6 characters" }),
+  patientId: z.string().min(1, "Patient ID is required"),
 });
 export const reportSchema = z.object({
   date: z.date(),

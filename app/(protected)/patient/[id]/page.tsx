@@ -13,6 +13,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { UserRole } from "@prisma/client";
+import { auth } from "@/auth";
 
 const Patient = async ({
   params,
@@ -21,12 +23,14 @@ const Patient = async ({
   params: { id: string };
   searchParams: { [key: string]: string | undefined };
 }) => {
+  const user = await auth();
   const recenttab = searchParams.tab || "profile";
   console.log(recenttab);
   const { profile, doctorsreport, medication, injection } = await testing(
     params.id
   );
   console.log(params.id);
+
   return (
     <div className="w-full">
       <p className="text-center text-4xl font-bold">
@@ -122,12 +126,16 @@ const Patient = async ({
         </TabsContent>
         <TabsContent value="medicalrecord" className="">
           <div className="">
-            <Link
-              href={`/medical_record/${params.id}`}
-              className="flex items-center justify-center "
-            >
-              <Button>Creat new file</Button>
-            </Link>
+            {user?.user.role === UserRole.DOCTOR ? (
+              <Link
+                href={`/medical_record/${params.id}`}
+                className="flex items-center justify-center "
+              >
+                <Button>Creat new file</Button>
+              </Link>
+            ) : (
+              <p></p>
+            )}
           </div>
           <div className="grid grid-cols-5 gap-4 content-center">
             {doctorsreport.map((med) => (
@@ -149,12 +157,16 @@ const Patient = async ({
           </div>
         </TabsContent> */}
         <TabsContent value="injection">
-          <Link
-            href={`/injection/${params.id}`}
-            className="flex items-center justify-center "
-          >
-            <Button>Creat new file</Button>
-          </Link>
+          {user?.user.role === UserRole.NURSE ? (
+            <Link
+              href={`/injection/${params.id}`}
+              className="flex items-center justify-center "
+            >
+              <Button>Creat new file</Button>
+            </Link>
+          ) : (
+            <p></p>
+          )}
           <div className="grid grid-cols-5 gap-4 content-center">
             {injection.map((med) => (
               <Injection {...med} />

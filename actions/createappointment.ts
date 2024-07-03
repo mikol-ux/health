@@ -19,10 +19,10 @@ export const Create_appointment = async (
   if (values.date === new Date()) {
     return { error: "it is already today" };
   }
-  // rebuild so that it cant book today
-  const patientId = await getPatientId(user?.user.id);
-  if (!patientId) return { error: "you dont have a profile" };
-  const userID = await getUserAppointment(patientId?.id);
+  // // rebuild so that it cant book today
+  // const patientId = await getPatientId(user?.user.profile.id);
+  // if (!patientId) return { error: "you dont have a profile" };
+  const userID = await getUserAppointment(user?.user.profile.id);
   if (userID) {
     return { error: "you already have an appointment booked" };
   }
@@ -38,7 +38,7 @@ export const Create_appointment = async (
       time: values.time,
       note: values.note,
       daytime: newCombinedId,
-      patientId: patientId?.id as string,
+      patientId: values.patientId as string,
     },
   });
   return { success: "apointment has been booked successfully" };

@@ -1,7 +1,11 @@
 import React from "react";
 import Appointment from "../_component/files/appointment";
 import { auth } from "@/auth";
-import { deleteAppointment, getUserAppointment } from "@/data/user";
+import {
+  deleteAppointment,
+  getPatientId,
+  getUserAppointment,
+} from "@/data/user";
 import {
   Card,
   CardContent,
@@ -13,9 +17,10 @@ import {
 import { MdDeleteForever } from "react-icons/md";
 import { Delete } from "@/actions/delete";
 import { DeleteButton } from "@/components/auth/delete-button";
+import { getPatientByuserId } from "@/data/userProfile";
 const BookAppoint = async () => {
   const user = await auth();
-  const mainUser = user?.user.patientId;
+  const mainUser = user?.user.profile.id;
   const userAppointment = await getUserAppointment(mainUser);
   const date = () => {
     const dateString = userAppointment?.day.toISOString().split("T")[0];

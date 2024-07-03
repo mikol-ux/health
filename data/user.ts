@@ -31,7 +31,7 @@ export const getUserAppointment = async (id: any) => {
 };
 export const getPatientId = async (id: any) => {
   try {
-    const user = await db.patient.findFirst({
+    const user = await db.patient.findUnique({
       where: { id: id },
     });
     return user;
