@@ -32,7 +32,7 @@ const Patient = async ({
   console.log(params.id);
 
   return (
-    <div className="w-full">
+    <div className="w-full" key={params.id}>
       <p className="text-center text-4xl font-bold">
         <span className=""></span>
         {profile?.fullname}

@@ -71,7 +71,7 @@ const Injections = ({ params }: { params: { id: string } }) => {
     });
   };
   return (
-    <Card className="w-[600px]">
+    <Card className="w-[600px]" key={params.id}>
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
           injection given today
