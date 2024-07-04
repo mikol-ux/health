@@ -57,10 +57,6 @@ const BookAppoint = async () => {
       </div>
     );
   }
-  return (
-    <div>
-      <Appointment />
-    </div>
-  );
+  return <Appointment />;
 };
 export default BookAppoint;
