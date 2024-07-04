@@ -95,7 +95,7 @@ export default function Doctors_Report({
           </DrawerClose>
           {/* Your drawer content with potentially scrollable elements */}
           <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Doctor's Report</h1>
+            <h1 className="text-2xl font-bold mb-4">Doctor&apos;s Report</h1>
             <p className="mb-4">
               <strong>Date:</strong> {new Date(date).toLocaleDateString()}
             </p>

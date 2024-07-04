@@ -33,7 +33,7 @@ export default function CardList({ data }: { data: Patient[] }) {
         </TableHeader>
         <TableBody>
           {data.map((p) => (
-            <TableRow className="text-xs py-2 px-8">
+            <TableRow className="text-xs py-2 px-8" key={p.id}>
               <TableCell className="font-medium py-2 px-8">
                 {p.fullname}
               </TableCell>
