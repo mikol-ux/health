@@ -33,7 +33,7 @@ import { FormError } from "@/components/form-error";
 import { useRouter } from "next/navigation";
 import { Create_Report } from "@/actions/createReport";
 
-export function CreateProfile({ params }: { params: { id: string } }) {
+export default function CreateProfile({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -50,7 +50,7 @@ export function CreateProfile({ params }: { params: { id: string } }) {
       labresult: "",
       prescription: "",
       patientId: params.id,
-      docId: session.data?.user.docId,
+      docId: session.data?.user.profile.id,
     },
   });
   const onSubmit = (values: z.infer<typeof reportSchema>) => {
