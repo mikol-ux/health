@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/navbar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import Sidebar from "./_component/files/sidebar";
