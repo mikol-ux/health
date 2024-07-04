@@ -6,8 +6,6 @@ import { RegistrationForm } from "../_component/files/createprofile";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@prisma/client";
-import { Doctor_Profile } from "../_component/files/docprofile";
-import { Nurse_Profile } from "../_component/files/nurseprofile";
 import {
   Select,
   SelectContent,
