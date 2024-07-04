@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 
 export const Delete = async (id: string) => {
   console.log(id);
-  await db.random.delete({
+  await db.patient.delete({
     where: { id },
   });
 };
