@@ -37,10 +37,9 @@ const BookAppoint = async () => {
           <CardHeader>
             <CardTitle>Booked appointment </CardTitle>
             <div className="absolute top-1 right-1 text-2xl">
-              <DeleteButton
-                childId={userAppointment.id}
-                children={<MdDeleteForever />}
-              />
+              <DeleteButton childId={userAppointment.id}>
+                <MdDeleteForever />
+              </DeleteButton>
             </div>
           </CardHeader>
           <CardContent>

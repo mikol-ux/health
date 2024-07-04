@@ -139,7 +139,9 @@ const Patient = async ({
           </div>
           <div className="grid grid-cols-5 gap-4 content-center">
             {doctorsreport.map((med) => (
-              <Doctors_Report {...med} />
+              <div key={med.id}>
+                <Doctors_Report {...med} />
+              </div>
             ))}
           </div>
         </TabsContent>
@@ -169,7 +171,9 @@ const Patient = async ({
           )}
           <div className="grid grid-cols-5 gap-4 content-center">
             {injection.map((med) => (
-              <Injection {...med} />
+              <div key={med.id}>
+                <Injection {...med} />
+              </div>
             ))}
           </div>
         </TabsContent>
