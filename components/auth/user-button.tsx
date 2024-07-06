@@ -39,7 +39,7 @@ export const UserButton = () => {
           <DeleteButton>
             <DropdownMenuItem>
               <DeleteIcon className="h-4 w-4 mr-2" />
-              Logout
+              Delete Account
             </DropdownMenuItem>
           </DeleteButton>
         </DropdownMenuContent>
