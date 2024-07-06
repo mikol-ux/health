@@ -9,7 +9,7 @@ const DashBoardItem = async () => {
   const { admittedPatients, totalrecordedpatients, appointments } =
     await dashboardData();
 
-  if (user?.user.role === UserRole.PATIENT) {
+  if (user?.user.role === UserRole.PATIENT || !user?.user.role) {
     return (
       <div className="flex justify-between items-center mb-4 p-4">
         <h2 className="text-xl md:text-2xl font-extrabold text-gray-800">

@@ -1,9 +1,10 @@
 "use client";
 import { DEFAULT_LOGON_REDIRECT } from "@/routes";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import { FaGoogle } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle, FcHome } from "react-icons/fc";
 
 export default function LOGIN() {
   const onClick = (provider: "google" | "github") => {
@@ -23,6 +24,13 @@ export default function LOGIN() {
           <FcGoogle className="h-6 w-6 mr-2" />
           Sign in with Google
         </button>
+        <Link
+          href="/"
+          className="mt-6 w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-900 hover:bg-gray-50 flex items-center justify-center"
+        >
+          <FcHome className="h-6 w-6 mr-2" />
+          Go Back
+        </Link>
       </div>
     </div>
   );

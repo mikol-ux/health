@@ -63,7 +63,7 @@ model Doctor {
   medicalLicenseNumber String
   specialization       String
   yearsOfExperience    String
-  user                 User     @relation(fields: [userId], references: [id])
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   doctorsReport        Doctorsreport []
   medication           Medications   []
 }
@@ -79,7 +79,7 @@ model Nurse {
   nursingLicenseNumber String
   department           String
   yearsOfExperience    String
-  user               User     @relation(fields: [userId], references: [id])
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   injection         Injection[]
 }
 
@@ -93,7 +93,7 @@ model Staff {
   address     String
   position    String
   department  String
-  user        User   @relation(fields: [userId], references: [id])
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Patient {
@@ -107,7 +107,7 @@ model Patient {
   address     String
   nextofkin   String
   nextofphone String
-  user        User   @relation(fields: [userId], references: [id])
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   doctorsReport Doctorsreport []
   appointment   Appointment[]
   medication    Medications[]

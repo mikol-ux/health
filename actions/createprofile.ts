@@ -7,6 +7,10 @@ import {
   PatientRegistrationSchema,
   ProfileForm,
   StaffRegistrationSchema,
+  DoctorUpdateSchema,
+  NurseUpdateSchema,
+  PatientUpdateSchema,
+  StaffUpdateSchema,
 } from "../schemas";
 import { auth } from "@/auth";
 import { UserRole } from "@prisma/client";
@@ -162,5 +166,139 @@ export const Create_Profile = async (
       },
     });
     return { success: "Patient Profile Created" };
+  }
+};
+
+//
+//
+//
+//
+//
+//
+//
+
+export const Update_Profile = async (
+  values:
+    | z.infer<typeof PatientUpdateSchema>
+    | z.infer<typeof DoctorUpdateSchema>
+    | z.infer<typeof NurseUpdateSchema>
+    | z.infer<typeof StaffUpdateSchema>
+) => {
+  const user = await auth();
+
+  /*  const ProfileData ={
+    Username: Username,
+      age: age,
+      phoneNumber: phoneNumber,
+      allergies: allergies,
+      helleditarysickness: helleditarysickness,
+      pastMarjorsurgeries: pastMarjorsurgeries,
+  } */
+  if (user?.user.role === UserRole.DOCTOR) {
+    const validatedFields = DoctorUpdateSchema.safeParse(values);
+    if (!validatedFields.success) {
+      return { error: "invalid fields" };
+    }
+    const {
+      fullName,
+      dob,
+      gender,
+      phone,
+      address,
+      medicalLicenseNumber,
+      specialization,
+      yearsOfExperience,
+    } = validatedFields.data;
+
+    await db.doctor.update({
+      where: { id: user.user.profile.id },
+      data: {
+        fullname: fullName,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        address: address,
+        medicalLicenseNumber: medicalLicenseNumber,
+        specialization: specialization,
+        yearsOfExperience: yearsOfExperience,
+      },
+    });
+    return { success: "Profile Updated" };
+  }
+  if (user?.user.role === UserRole.NURSE) {
+    const validatedFields = NurseUpdateSchema.safeParse(values);
+    if (!validatedFields.success) {
+      return { error: "invalid fields" };
+    }
+    const {
+      fullName,
+      dob,
+      gender,
+      phone,
+      address,
+      nursingLicenseNumber,
+      department,
+      yearsOfExperience,
+    } = validatedFields.data;
+
+    await db.nurse.update({
+      where: { id: user.user.profile.id },
+      data: {
+        fullname: fullName,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        address: address,
+        nursingLicenseNumber: nursingLicenseNumber,
+        department: department,
+        yearsOfExperience: yearsOfExperience,
+      },
+    });
+    return { success: "Profile Updated" };
+  }
+  if (user?.user.role === UserRole.STAFF) {
+    const validatedFields = StaffUpdateSchema.safeParse(values);
+    if (!validatedFields.success) {
+      return { error: "invalid fields" };
+    }
+    const { fullName, dob, gender, phone, address, position, department } =
+      validatedFields.data;
+
+    await db.staff.update({
+      where: { id: user.user.profile.id },
+      data: {
+        fullname: fullName,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        address: address,
+        position: position,
+        department: department,
+      },
+    });
+    return { success: "Profile Updated" };
+  }
+  if (user?.user.role === UserRole.PATIENT) {
+    const validatedFields = PatientUpdateSchema.safeParse(values);
+    if (!validatedFields.success) {
+      return { error: "invalid fields" };
+    }
+    const { fullName, dob, gender, phone, address, nextofkin, nextofphone } =
+      validatedFields.data;
+
+    await db.patient.update({
+      where: { id: user.user.profile.id },
+      data: {
+        fullname: fullName,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        address: address,
+        admitted: false,
+        nextofkin: nextofkin,
+        nextofphone: nextofphone,
+      },
+    });
+    return { success: "Profile Updated" };
   }
 };

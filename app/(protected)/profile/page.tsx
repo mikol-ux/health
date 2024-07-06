@@ -1,10 +1,12 @@
+"use client";
 import React from "react";
 import { auth } from "@/auth";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-const Profilelink = async () => {
-  const user = await auth();
-  const profile = user?.user.profile;
+const Profilelink = () => {
+  const { data: session, update } = useSession();
+  const profile = session?.user.profile;
 
   if (!profile) {
     return (
@@ -108,7 +110,7 @@ const Profilelink = async () => {
     ),
   };
 
-  const role = user?.user.role;
+  const role = session?.user.role;
 
   return (
     <div className="container mx-auto mt-8 px-4">

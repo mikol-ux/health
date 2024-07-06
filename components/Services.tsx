@@ -16,7 +16,7 @@ export default function About() {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        viewport={{ once: false, amount: 0.5 }}
+        viewport={{ once: true }}
       >
         <h2 className="text-3xl font-semibold mb-8">Some of our Services</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

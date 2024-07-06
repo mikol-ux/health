@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { MdDeleteForever } from "react-icons/md";
 import { Delete } from "@/actions/delete";
 import { DeleteButton } from "@/components/auth/delete-button";
@@ -32,25 +33,25 @@ const BookAppoint = async () => {
 
   if (userAppointment) {
     return (
-      <div className="w-full flex justify-center items-center relative">
-        <Card>
-          <CardHeader>
-            <CardTitle>Booked appointment </CardTitle>
-            <div className="absolute top-1 right-1 text-2xl">
+      <div className="w-full flex justify-center items-center p-4">
+        <Card className="relative shadow-lg rounded-lg border border-gray-200 max-w-md w-full">
+          <CardHeader className="flex justify-center">
+            <CardTitle className="text-lg font-semibold text-center">
+              Booked Appointment
+            </CardTitle>
+            <div className="absolute top-3 right-3">
               <DeleteButton childId={userAppointment.id}>
-                <MdDeleteForever />
+                <MdDeleteForever className="text-red-500 hover:text-red-700 cursor-pointer text-2xl" />
               </DeleteButton>
             </div>
           </CardHeader>
-          <CardContent>
-            <p className="text-center font-extrabold">{date()}</p>
-            <p className="text-center font-extrabold">{userAppointment.time}</p>
-            <p className="text-center">{userAppointment.note}</p>
+          <CardContent className="text-center space-y-4 p-4">
+            <p className="text-xl font-bold">{date()}</p>
+            <p className="text-lg font-semibold">{userAppointment.time}</p>
+            <p className="text-gray-600">{userAppointment.note}</p>
           </CardContent>
-          <CardFooter>
-            <p className="p-1 text-gray-500">
-              please go to appointment on time
-            </p>
+          <CardFooter className="bg-gray-50 py-2 text-center mx-auto">
+            Please arrive on time for your appointment.
           </CardFooter>
         </Card>
       </div>

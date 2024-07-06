@@ -114,6 +114,47 @@ export const StaffRegistrationSchema = z.object({
       "You must agree to the terms and conditions"
     ),
 });
+export const PatientUpdateSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  dob: z.string().min(1, "Date of Birth is required"),
+  gender: z.string().min(1, "Gender is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  address: z.string().min(1, "Address is required"),
+  nextofkin: z.string().min(1, "input next of kin incase of emergency"),
+  nextofphone: z.string().min(1, "input next of kin incase of emergency"),
+});
+
+export const DoctorUpdateSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  dob: z.string().min(1, "Date of Birth is required"),
+  gender: z.string().min(1, "Gender is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  address: z.string().min(1, "Address is required"),
+  medicalLicenseNumber: z.string().min(1, "Medical License Number is required"),
+  specialization: z.string().min(1, "Specialization is required"),
+  yearsOfExperience: z.string().min(1, "Years of Experience is required"),
+});
+
+export const NurseUpdateSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  dob: z.string().min(1, "Date of Birth is required"),
+  gender: z.string().min(1, "Gender is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  address: z.string().min(1, "Address is required"),
+  nursingLicenseNumber: z.string().min(1, "Nursing License Number is required"),
+  department: z.string().min(1, "Department is required"),
+  yearsOfExperience: z.string().min(1, "Years of Experience is required"),
+});
+
+export const StaffUpdateSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  dob: z.string().min(1, "Date of Birth is required"),
+  gender: z.string().min(1, "Gender is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  address: z.string().min(1, "Address is required"),
+  position: z.string().min(1, "Position is required"),
+  department: z.string().min(1, "Department is required"),
+});
 
 // Doctorsreport Form Schema
 export const DoctorsreportSchema = z.object({

@@ -37,10 +37,15 @@ const AppointmentsTable = async ({
   const limit = Number(searchParams?.limit) || 6;
   const offset = (currentPage - 1) * limit;
   const { data, totalPages } = await GetAppointments({ range, offset, limit });
+
   return (
     <div>
       <div className="mb-6">
-        <Appointments data={data} />
+        {data.length === 0 ? (
+          <p className="p-1 m-8 text-8xl opacity-30">NO APPOINTMENTS</p>
+        ) : (
+          <Appointments data={data} />
+        )}
       </div>
       <Pagination totalPages={totalPages} />
     </div>

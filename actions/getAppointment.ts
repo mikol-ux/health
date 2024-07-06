@@ -30,6 +30,9 @@ export async function GetAppointments({
     where,
     skip: offset,
     take: limit,
+    include: {
+      patient: true,
+    },
   });
 
   const totalCount = await db.appointment.count({ where });

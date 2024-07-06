@@ -14,6 +14,8 @@ import { FiLogIn } from "react-icons/fi";
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import { DEFAULT_LOGON_REDIRECT } from "@/routes";
+import { DeleteButton } from "./logout-button";
+import { DeleteIcon } from "lucide-react";
 
 export const UserButton = () => {
   const { data: session, status } = useSession();
@@ -34,6 +36,12 @@ export const UserButton = () => {
             <ExitIcon className="h-4 w-4 mr-2" />
             Logout
           </DropdownMenuItem>
+          <DeleteButton>
+            <DropdownMenuItem>
+              <DeleteIcon className="h-4 w-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DeleteButton>
         </DropdownMenuContent>
       </DropdownMenu>
     );

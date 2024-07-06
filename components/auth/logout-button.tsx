@@ -1,19 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { logout } from "../../actions/logout";
+import { deleteAccount } from "../../actions/deleteAccount";
 
 interface LogoutButtonProps {
   children?: React.ReactNode;
 }
 
-export const LogoutButton = ({ children }: LogoutButtonProps) => {
+export const DeleteButton = ({ children }: LogoutButtonProps) => {
   const router = useRouter();
   const onClick = () => {
-    logout();
-
-    router.push("/");
-    router.refresh();
+    deleteAccount();
   };
   return (
     <span onClick={onClick} className="cursor-pointer">
