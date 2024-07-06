@@ -1,6 +1,7 @@
 "use client";
 
 import { Link, animateScroll as scroll } from "react-scroll";
+import { UserButton } from "./auth/user-button";
 
 const menu = [
   {
@@ -37,6 +38,9 @@ const Nav = () => {
           </span>
         </Link>
       ))}
+      <div className="cursor-pointer text-xl font-medium capitalize">
+        <UserButton />
+      </div>
     </nav>
   );
 };

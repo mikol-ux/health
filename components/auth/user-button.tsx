@@ -1,4 +1,5 @@
 "use client";
+
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -8,34 +9,55 @@ import {
 import { AvatarFallback, Avatar, AvatarImage } from "../ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { ExitIcon } from "@radix-ui/react-icons";
-import { useCurrentUser } from "../../hooks/use-current-user";
-
-import { LogoutButton } from "./logout-button";
+import { FcGoogle } from "react-icons/fc";
+import { FiLogIn } from "react-icons/fi";
 import { useSession } from "next-auth/react";
-import LOgin from "./login";
+import { signIn, signOut } from "next-auth/react";
+import { DEFAULT_LOGON_REDIRECT } from "@/routes";
+
 export const UserButton = () => {
-  const user = useCurrentUser();
   const { data: session, status } = useSession();
-  if (status === "unauthenticated") {
-    return <LOgin />;
+
+  if (status === "authenticated") {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Avatar>
+            <AvatarImage src={session.user.image || ""} />
+            <AvatarFallback className="bg-sky-500">
+              <FaUser />
+            </AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-40" align="end">
+          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+            <ExitIcon className="h-4 w-4 mr-2" />
+            Logout
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
   }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={user?.image || ""} />
+          <AvatarImage src="" />
           <AvatarFallback className="bg-sky-500">
-            <FaUser />
+            <FcGoogle />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
-        <LogoutButton>
-          <DropdownMenuItem>
-            <ExitIcon className="h-4 w-4 mr-2" />
-            Logout
-          </DropdownMenuItem>
-        </LogoutButton>
+        <DropdownMenuItem
+          onClick={() =>
+            signIn("google", { callbackUrl: DEFAULT_LOGON_REDIRECT })
+          }
+        >
+          <FiLogIn className="h-4 w-4 mr-2" />
+          Login with Google
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
