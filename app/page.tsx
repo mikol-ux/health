@@ -10,12 +10,12 @@ import Footer from "@/components/footer";
 const Home = () => {
   return (
     <main>
-      <Header />
+      {/* <Header /> */}
       <AuroraBackgroundDemo />
-      <About />
+      {/* <About />
       <Clients />
       <Services />
-      <Footer />
+      <Footer /> */}
     </main>
   );
 };

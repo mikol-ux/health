@@ -23,15 +23,15 @@ export default function AuroraBackgroundDemo() {
               className="relative flex flex-col gap-4 items-center justify-center px-4"
             >
               <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
-                Background lights are cool you know.
+                {/* Background lights are cool you know. */} STOP THIS
               </div>
               <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
-                And this, is chemical burn.
+                {/* And this, is chemical burn. */} PLEASE MY LOVE
               </div>
               <Link href="/appointment">
-                <button className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
+                {/* <button className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
                   Book Appointment
-                </button>
+                </button> */}
               </Link>
             </motion.div>
           </div>
@@ -43,7 +43,7 @@ export default function AuroraBackgroundDemo() {
               className="relative"
             >
               <Image
-                src="/pngdoc.png"
+                src="/Love.jpg"
                 height={580}
                 width={580}
                 alt="doc"
