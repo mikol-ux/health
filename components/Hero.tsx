@@ -43,7 +43,7 @@ export default function AuroraBackgroundDemo() {
               className="relative"
             >
               <Image
-                src="/Love.jpg"
+                src="/pngdoc.png"
                 height={580}
                 width={580}
                 alt="doc"
