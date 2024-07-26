@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Delete } from "@/actions/deleteUser";
+
 export default function CardList({ data }: { data: Patient[] }) {
   const router = useRouter();
   const deleteUser = (id: string) => {
@@ -21,46 +22,54 @@ export default function CardList({ data }: { data: Patient[] }) {
   };
 
   return (
-    <div>
-      <Table className="w-full">
+    <div className="">
+      <Table className="min-w-full divide-y divide-gray-200">
         <TableHeader>
           <TableRow>
-            <TableHead className="">name</TableHead>
-            <TableHead>dob</TableHead>
-            <TableHead>gender</TableHead>
-            <TableHead>admission status</TableHead>
+            <TableHead className="px-6 py-3 text-xs sm:text-sm">Name</TableHead>
+            <TableHead className="px-6 py-3 text-xs sm:text-sm hidden md:table-cell">
+              DOB
+            </TableHead>
+            <TableHead className="px-6 py-3 text-xs sm:text-sm hidden md:table-cell">
+              Gender
+            </TableHead>
+            <TableHead className="px-6 py-3 text-xs sm:text-sm hidden md:table-cell">
+              Admission Status
+            </TableHead>
+            <TableHead className="px-6 py-3 text-xs sm:text-sm">
+              Actions
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.map((p) => (
-            <TableRow className="text-xs py-2 px-8" key={p.id}>
-              <TableCell className="font-medium py-2 px-8">
+            <TableRow className="text-xs py-2 px-4 sm:px-6 sm:py-4" key={p.id}>
+              <TableCell className="font-medium whitespace-nowrap">
                 {p.fullname}
               </TableCell>
-              <TableCell className="py-2 px-8">{p.dob}</TableCell>
-              <TableCell className="py-2 px-8">{p.gender}</TableCell>
-              <TableCell className="py-2 px-8">
+              <TableCell className="whitespace-nowrap hidden md:table-cell">
+                {p.dob}
+              </TableCell>
+              <TableCell className="whitespace-nowrap hidden md:table-cell">
+                {p.gender}
+              </TableCell>
+              <TableCell className="whitespace-nowrap hidden md:table-cell">
                 <p
                   className={`${
                     p.admitted === true ? "bg-green-500" : "bg-red-500"
-                  } text-center rounded opacity-50 `}
+                  } text-center rounded opacity-50`}
                 >
-                  {p.admitted === true ? "admitted" : "not admitted"}
+                  {p.admitted === true ? "Admitted" : "Not Admitted"}
                 </p>
               </TableCell>
-              <TableCell className="py-2 px-8">
+              <TableCell className="whitespace-nowrap space-x-2">
                 <Button
-                  variant="destructive"
-                  onClick={() => deleteUser(p.id)}
-                  className="py-2 px-4 text-md"
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs sm:text-sm"
                 >
-                  Delete
-                </Button>
-              </TableCell>
-              <TableCell className="py-2 px-8">
-                <Button variant="ghost">
                   <Link href={`/patient/${p.id}?tab=profile`}>
-                    View medical history
+                    View Medical History
                   </Link>
                 </Button>
               </TableCell>
@@ -68,9 +77,6 @@ export default function CardList({ data }: { data: Patient[] }) {
           ))}
         </TableBody>
       </Table>
-      {/*  {data.map((p) => (
-        <PokemonCard key={p.id} id={p.id} name={p.name} email={p.email} />
-      ))} */}
     </div>
   );
 }

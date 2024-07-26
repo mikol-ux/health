@@ -20,6 +20,10 @@ const menu = [
     name: "Contact",
     href: "Contact",
   },
+  {
+    name: "Dashboard",
+    href: "profile",
+  },
 ];
 
 const Nav = () => {

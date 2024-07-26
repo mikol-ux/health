@@ -20,7 +20,7 @@ import { FaRegClock, FaTasks } from "react-icons/fa";
 export default function DashboardSideBar() {
   const pathname = usePathname();
   const { data: session, update } = useSession();
-  if (session?.user.role === UserRole.PATIENT) {
+  if (session?.user.role === UserRole.PATIENT || !session?.user.role) {
     return (
       <div className="lg:block hidden border-r h-full">
         <div className="flex h-full max-h-screen flex-col gap-2 ">

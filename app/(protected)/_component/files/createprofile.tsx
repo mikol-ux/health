@@ -36,7 +36,6 @@ import {
 } from "@/schemas";
 import { UserRole } from "@prisma/client";
 import { Create_Profile } from "@/actions/createprofile";
-
 type RegistrationFormValues = {
   fullName: string;
   dob: string;
@@ -118,12 +117,14 @@ export function RegistrationForm() {
         .catch(() => setError("Something went wrong"));
     });
   };
-
+  /* if (session?.user.profile) {
+    return router.push("/profile");
+  } */
   return (
     <CardWrapper headerLabel="Hospital" Label="Registration">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <FormField
               control={form.control}
               name="fullName"
@@ -135,7 +136,6 @@ export function RegistrationForm() {
                       disabled={isPending}
                       {...field}
                       placeholder="Full Name"
-                      className="w-full"
                     />
                   </FormControl>
                   <FormMessage />
@@ -149,12 +149,7 @@ export function RegistrationForm() {
                 <FormItem>
                   <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      type="date"
-                      {...field}
-                      className="w-full"
-                    />
+                    <Input disabled={isPending} type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -167,11 +162,7 @@ export function RegistrationForm() {
                 <FormItem>
                   <FormLabel>Gender</FormLabel>
                   <FormControl>
-                    <select
-                      disabled={isPending}
-                      {...field}
-                      className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    >
+                    <select disabled={isPending} {...field}>
                       <option value="">Select...</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -193,7 +184,6 @@ export function RegistrationForm() {
                       disabled={isPending}
                       {...field}
                       placeholder="Phone Number"
-                      className="w-full"
                     />
                   </FormControl>
                   <FormMessage />
@@ -211,7 +201,6 @@ export function RegistrationForm() {
                       disabled={isPending}
                       {...field}
                       placeholder="Address"
-                      className="w-full"
                     />
                   </FormControl>
                   <FormMessage />
@@ -231,7 +220,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Medical License Number"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -249,7 +237,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Specialization"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -268,7 +255,6 @@ export function RegistrationForm() {
                           type="number"
                           {...field}
                           placeholder="Years of Experience"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -290,7 +276,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Nursing License Number"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -308,7 +293,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Department"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -327,7 +311,6 @@ export function RegistrationForm() {
                           type="number"
                           {...field}
                           placeholder="Years of Experience"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -349,7 +332,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Position"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -367,7 +349,6 @@ export function RegistrationForm() {
                           disabled={isPending}
                           {...field}
                           placeholder="Department"
-                          className="w-full"
                         />
                       </FormControl>
                       <FormMessage />
@@ -383,13 +364,12 @@ export function RegistrationForm() {
                   name="nextofkin"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Next of Kin</FormLabel>
+                      <FormLabel>next of kin</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
                           {...field}
-                          placeholder="Next of Kin"
-                          className="w-full"
+                          placeholder="nextofkin"
                         />
                       </FormControl>
                       <FormMessage />
@@ -401,13 +381,12 @@ export function RegistrationForm() {
                   name="nextofphone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Next of Kin Number</FormLabel>
+                      <FormLabel>next of kin number</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
                           {...field}
-                          placeholder="Next of Kin Number"
-                          className="w-full"
+                          placeholder="nextofphone"
                         />
                       </FormControl>
                       <FormMessage />
@@ -416,6 +395,7 @@ export function RegistrationForm() {
                 />
               </>
             )}
+
             <FormField
               control={form.control}
               name="terms"
@@ -426,9 +406,8 @@ export function RegistrationForm() {
                       disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="mr-2"
                     />
-                    I agree to the terms and conditions
+                    terms and conditions
                   </FormLabel>
                   <FormMessage />
                 </FormItem>
@@ -437,8 +416,8 @@ export function RegistrationForm() {
             {success && <div className="text-green-600">{success}</div>}
             {error && <div className="text-red-600">{error}</div>}
           </div>
-          <Button type="submit" disabled={isPending} className="w-full">
-            Create Profile
+          <Button type="submit" disabled={isPending}>
+            Create Prfile
           </Button>
         </form>
       </Form>

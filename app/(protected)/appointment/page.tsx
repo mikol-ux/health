@@ -19,6 +19,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { Delete } from "@/actions/delete";
 import { DeleteButton } from "@/components/auth/delete-button";
 import { getPatientByuserId } from "@/data/userProfile";
+import { FcCancel } from "react-icons/fc";
 const BookAppoint = async () => {
   const user = await auth();
   const mainUser = user?.user.profile.id;
@@ -41,7 +42,8 @@ const BookAppoint = async () => {
             </CardTitle>
             <div className="absolute top-3 right-3">
               <DeleteButton childId={userAppointment.id}>
-                <MdDeleteForever className="text-red-500 hover:text-red-700 cursor-pointer text-2xl" />
+                {/* <MdDeleteForever className="text-red-500 hover:text-red-700 cursor-pointer text-2xl" /> */}
+                <FcCancel />
               </DeleteButton>
             </div>
           </CardHeader>
