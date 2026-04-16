@@ -1,5 +1,5 @@
-import authConfig from "./auth.config";
-import NextAuth from "next-auth";
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
 import {
   DEFAULT_LOGON_REDIRECT,
   apiAuthPrefix,
@@ -8,46 +8,43 @@ import {
   roleRoutes,
 } from "./routes";
 
-const { auth } = NextAuth(authConfig);
-
-export default auth((req): any => {
+export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  const userRole = req.auth?.user?.role;
+
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const isLoggedIn = !!token;
+  const userRole = token?.role as string | undefined;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
-  if (isApiAuthRoute) return null;
-  if (isPublicRoute) return null;
+  if (isApiAuthRoute) return NextResponse.next();
+  if (isPublicRoute) return NextResponse.next();
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGON_REDIRECT, nextUrl));
+      return NextResponse.redirect(new URL(DEFAULT_LOGON_REDIRECT, nextUrl));
     }
-    return null;
+    return NextResponse.next();
   }
 
   if (!isLoggedIn) {
-    return Response.redirect(new URL("/LOGIN", nextUrl));
+    return NextResponse.redirect(new URL("/LOGIN", nextUrl));
   }
 
-  // Role-based route protection
   for (const [prefix, allowedRoles] of Object.entries(roleRoutes)) {
     if (nextUrl.pathname.startsWith(prefix)) {
       if (!userRole || !allowedRoles.includes(userRole)) {
-        // Redirect to their default landing page instead of a blank error
-        return Response.redirect(new URL(DEFAULT_LOGON_REDIRECT, nextUrl));
+        return NextResponse.redirect(new URL(DEFAULT_LOGON_REDIRECT, nextUrl));
       }
       break;
     }
   }
 
-  return null;
-});
+  return NextResponse.next();
+}
 
-// Optionally, don't invoke Middleware on some paths
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
