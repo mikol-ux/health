@@ -31,7 +31,7 @@ export default function ProfilePage() {
           <User className="w-8 h-8 text-slate-400" />
         </div>
         <h2 className="text-xl font-semibold text-slate-700">No profile found</h2>
-        <p className="text-slate-500 text-sm">You haven't set up your profile yet.</p>
+        <p className="text-slate-500 text-sm">You haven&apos;t set up your profile yet.</p>
         <Link
           href="/create-profile"
           className="px-5 py-2.5 bg-sky-500 text-white text-sm font-semibold rounded-xl hover:bg-sky-600 transition-colors"

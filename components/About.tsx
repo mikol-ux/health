@@ -28,7 +28,7 @@ export default function About() {
             Dedicated to Your Health & Wellbeing
           </h2>
           <p className="text-slate-500 text-lg">
-            For over 25 years, MedCare has been the community's trusted healthcare partner — combining advanced medicine with genuine human care.
+            For over 25 years, MedCare has been the community&apos;s trusted healthcare partner — combining advanced medicine with genuine human care.
           </p>
         </motion.div>
 
@@ -68,7 +68,7 @@ export default function About() {
               At MedCare, our mission is to deliver compassionate, comprehensive healthcare to every patient who walks through our doors. We believe that exceptional medical care starts with listening — understanding your needs and crafting personalized treatment plans.
             </p>
             <p className="text-slate-500 leading-relaxed">
-              Founded in 1999, we've grown from a small clinic into a full-service hospital serving thousands of patients annually, while never losing sight of what matters most: you.
+              Founded in 1999, we&apos;ve grown from a small clinic into a full-service hospital serving thousands of patients annually, while never losing sight of what matters most: you.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               {["Accredited Hospital", "ISO Certified", "Award-Winning Care"].map((badge) => (
