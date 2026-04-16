@@ -8,11 +8,12 @@ import { Users } from "lucide-react";
 export default async function Patients({
   searchParams,
 }: {
-  searchParams?: { query?: string; page?: string; limit?: string };
+  searchParams?: Promise<{ query?: string; page?: string; limit?: string }>;
 }) {
-  const search = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 10;
+  const params = await searchParams;
+  const search = params?.query || "";
+  const currentPage = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 10;
   const offset = (currentPage - 1) * limit;
 
   const { data, totalPages } = await GetPatients({ offset, limit, search });

@@ -1,5 +1,6 @@
 "use client";
 import * as z from "zod";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
@@ -29,20 +30,13 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import {
-  PatientRegistrationSchema,
-  DoctorRegistrationSchema,
-  NurseRegistrationSchema,
-  StaffRegistrationSchema,
-  InjectionSchema,
-  MedicationsSchema,
-} from "@/schemas";
-import { UserRole } from "@prisma/client";
+import { MedicationsSchema } from "@/schemas";
 import { FormSucces } from "@/components/form-succes";
 import { FormError } from "@/components/form-error";
 import { Medication } from "@/actions/medicalForms";
 
-const MedicationForm = ({ params }: { params: { id: string } }) => {
+const MedicationForm = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = React.use(params);
   const { data: session, update } = useSession();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -52,7 +46,7 @@ const MedicationForm = ({ params }: { params: { id: string } }) => {
     defaultValues: {
       date: new Date(),
       medication: "",
-      patientId: params.id,
+      patientId: id,
       docId: session?.user.profile.id,
     },
   });
@@ -72,7 +66,7 @@ const MedicationForm = ({ params }: { params: { id: string } }) => {
     });
   };
   return (
-    <Card className="w-[600px]" key={params.id}>
+    <Card className="w-[600px]" key={id}>
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
           injection given today

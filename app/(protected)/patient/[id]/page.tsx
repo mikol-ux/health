@@ -21,12 +21,14 @@ const Patient = async ({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { [key: string]: string | undefined };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   const user = await auth();
-  const recenttab = searchParams.tab || "profile";
-  const { profile, doctorsreport, medication, injection } = await testing(params.id);
+  const { id } = await params;
+  const resolvedSearch = await searchParams;
+  const recenttab = resolvedSearch.tab || "profile";
+  const { profile, doctorsreport, medication, injection } = await testing(id);
 
   return (
     <div className="space-y-5">
@@ -86,7 +88,7 @@ const Patient = async ({
         <TabsContent value="medicalrecord">
           <div className="space-y-4">
             {user?.user.role === UserRole.DOCTOR && (
-              <Link href={`/medical_record/${params.id}`}>
+              <Link href={`/medical_record/${id}`}>
                 <Button className="bg-sky-500 hover:bg-sky-600 text-white gap-2">
                   <FilePlus className="w-4 h-4" />
                   Create New Report
@@ -111,7 +113,7 @@ const Patient = async ({
         <TabsContent value="injection">
           <div className="space-y-4">
             {user?.user.role === UserRole.NURSE && (
-              <Link href={`/injection/${params.id}`}>
+              <Link href={`/injection/${id}`}>
                 <Button className="bg-sky-500 hover:bg-sky-600 text-white gap-2">
                   <Syringe className="w-4 h-4" />
                   Record Injection

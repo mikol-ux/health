@@ -6,11 +6,12 @@ import { CalendarDays } from "lucide-react";
 export default async function AppointmentsPage({
   searchParams,
 }: {
-  searchParams?: { range?: string; page?: string; limit?: string };
+  searchParams?: Promise<{ range?: string; page?: string; limit?: string }>;
 }) {
-  const range = searchParams?.range || "all";
-  const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 10;
+  const params = await searchParams;
+  const range = params?.range || "all";
+  const currentPage = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 10;
   const offset = (currentPage - 1) * limit;
 
   const { data, totalPages } = await GetAppointments({ range, offset, limit });

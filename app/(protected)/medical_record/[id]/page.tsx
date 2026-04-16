@@ -1,5 +1,6 @@
 "use client";
 import * as z from "zod";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
@@ -29,22 +30,13 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import {
-  PatientRegistrationSchema,
-  DoctorRegistrationSchema,
-  NurseRegistrationSchema,
-  StaffRegistrationSchema,
-  InjectionSchema,
-  DoctorsreportSchema,
-} from "@/schemas";
-import { UserRole } from "@prisma/client";
+import { DoctorsreportSchema } from "@/schemas";
 import { FormSucces } from "@/components/form-succes";
 import { FormError } from "@/components/form-error";
 import { medicalReport } from "@/actions/medicalForms";
-type props = {
-  id: string;
-};
-const Medical_Reportsubmit = ({ params }: { params: { id: string } }) => {
+
+const Medical_Reportsubmit = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = React.use(params);
   const { data: session, update } = useSession();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -58,7 +50,7 @@ const Medical_Reportsubmit = ({ params }: { params: { id: string } }) => {
       labtest: "",
       labtestresult: "",
       prescription: "",
-      patientId: params.id as string,
+      patientId: id,
       docId: session?.user.profile.id as string,
     },
   });
@@ -79,7 +71,7 @@ const Medical_Reportsubmit = ({ params }: { params: { id: string } }) => {
     });
   };
   return (
-    <Card className="w-[600px]" key={params.id}>
+    <Card className="w-[600px]" key={id}>
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
           injection given today

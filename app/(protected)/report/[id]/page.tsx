@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,7 +33,8 @@ import { FormSucces } from "@/components/form-succes";
 import { FormError } from "@/components/form-error";
 import { useRouter } from "next/navigation";
 import { Create_Report } from "@/actions/createReport";
-const CreateProfile = ({ params }: { params: { id: string } }) => {
+const CreateProfile = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = React.use(params);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -48,7 +50,7 @@ const CreateProfile = ({ params }: { params: { id: string } }) => {
       labtest: "",
       labresult: "",
       prescription: "",
-      patientId: params.id,
+      patientId: id,
       docId: session.data?.user.profile.id,
     },
   });
