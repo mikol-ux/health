@@ -47,13 +47,20 @@ export default function Appointment() {
       time: "",
       date: new Date(),
       note: "",
-      patientId: session.data?.user.profile.id as string,
+      patientId: "",
     },
   });
 
   useEffect(() => {
     getTime();
   }, []);
+
+  useEffect(() => {
+    const profileId = session.data?.user?.profile?.id;
+    if (profileId) {
+      form.setValue("patientId", profileId);
+    }
+  }, [session.data, form]);
 
   const getTime = () => {
     const timeList = [];
