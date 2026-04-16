@@ -1,39 +1,17 @@
 "use client";
 import * as z from "zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
 import { MedicationsSchema } from "@/schemas";
-import { FormSucces } from "@/components/form-succes";
 import { FormError } from "@/components/form-error";
 import { Medication } from "@/actions/medicalForms";
+import { useSession } from "next-auth/react";
+import { Pill, CheckCircle2 } from "lucide-react";
 
 const MedicationForm = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = React.use(params);
@@ -41,66 +19,78 @@ const MedicationForm = ({ params }: { params: Promise<{ id: string }> }) => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof MedicationsSchema>>({
     resolver: zodResolver(MedicationsSchema),
-    defaultValues: {
-      date: new Date(),
-      medication: "",
-      patientId: id,
-      docId: session?.user.profile.id,
-    },
+    defaultValues: { date: new Date(), medication: "", patientId: id, docId: "" },
   });
+
+  useEffect(() => {
+    const docId = session?.user?.profile?.id;
+    if (docId) form.setValue("docId", docId);
+  }, [session, form]);
+
   const onSubmit = (values: z.infer<typeof MedicationsSchema>) => {
     startTransition(() => {
       Medication(values)
         .then((data) => {
-          if (data.error) {
-            setError(data.error);
-          }
-          if (data.success) {
-            update();
-            setSuccess(data.success);
-          }
+          if (data.error) setError(data.error);
+          if (data.success) { update(); setSuccess(data.success); }
         })
         .catch(() => setError("Something went wrong"));
     });
   };
+
+  if (success) {
+    return (
+      <div className="max-w-xl mx-auto flex flex-col items-center justify-center py-20 text-center gap-4">
+        <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center">
+          <CheckCircle2 className="w-8 h-8 text-emerald-500" />
+        </div>
+        <h2 className="text-xl font-bold text-slate-800">Medication Recorded</h2>
+        <p className="text-slate-500 text-sm">{success}</p>
+      </div>
+    );
+  }
+
   return (
-    <Card className="w-[600px]" key={id}>
-      <CardHeader>
-        <p className="text-2xl font-semibold text-center">
-          injection given today
-        </p>
-      </CardHeader>
-      <CardContent>
+    <div className="max-w-xl mx-auto space-y-5">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+          <Pill className="w-5 h-5 text-emerald-500" />
+        </div>
+        <div>
+          <h1 className="text-lg font-bold text-slate-800">Record Medication</h1>
+          <p className="text-sm text-slate-400">Prescribe medication for this patient</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-100 p-6">
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="medication"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Medication</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="john doe"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormSucces message={success} />
+          <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField control={form.control} name="medication" render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-medium text-slate-500 uppercase tracking-wider">Medication & Dosage</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    disabled={isPending}
+                    rows={4}
+                    placeholder="List medications, dosages, and administration instructions…"
+                    className="rounded-xl border-slate-200 resize-none"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )} />
             <FormError message={error} />
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={isPending} className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl">
+              {isPending ? "Saving…" : "Record Medication"}
+            </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

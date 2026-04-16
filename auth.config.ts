@@ -14,6 +14,9 @@ export default {
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
       }
+      if (session.user) {
+        (session.user as any).hasProfile = !!token.hasProfile;
+      }
       return session;
     },
   },

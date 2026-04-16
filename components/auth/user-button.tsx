@@ -1,21 +1,13 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { AvatarFallback, Avatar, AvatarImage } from "../ui/avatar";
+import { DropdownMenu, DropdownMenuItem, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuSeparator } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { FaUser } from "react-icons/fa";
-import { ExitIcon } from "@radix-ui/react-icons";
+import { LogOut } from "lucide-react";
+import { useSession, signOut, signIn } from "next-auth/react";
+import { DEFAULT_LOGON_REDIRECT } from "@/routes";
 import { FcGoogle } from "react-icons/fc";
 import { FiLogIn } from "react-icons/fi";
-import { useSession } from "next-auth/react";
-import { signIn, signOut } from "next-auth/react";
-import { DEFAULT_LOGON_REDIRECT } from "@/routes";
-import { DeleteButton } from "./logout-button";
-import { DeleteIcon } from "lucide-react";
 
 export const UserButton = () => {
   const { data: session, status } = useSession();
@@ -23,25 +15,30 @@ export const UserButton = () => {
   if (status === "authenticated") {
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Avatar>
-            <AvatarImage src={session.user.image || ""} />
-            <AvatarFallback className="bg-sky-500">
-              <FaUser />
-            </AvatarFallback>
-          </Avatar>
+        <DropdownMenuTrigger asChild>
+          <button className="focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-full">
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={session.user.image || ""} />
+              <AvatarFallback className="bg-sky-500 text-white text-xs font-semibold">
+                {session.user.name?.charAt(0).toUpperCase() ?? <FaUser className="w-3 h-3" />}
+              </AvatarFallback>
+            </Avatar>
+          </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-40" align="end">
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
-            <ExitIcon className="h-4 w-4 mr-2" />
-            Logout
-          </DropdownMenuItem>
-          <DeleteButton>
-            <DropdownMenuItem>
-              <DeleteIcon className="h-4 w-4 mr-2" />
-              Delete Account
+        <DropdownMenuContent className="w-48 rounded-xl border-slate-100 shadow-lg" align="end">
+          <div className="px-3 py-2 border-b border-slate-100">
+            <p className="text-sm font-semibold text-slate-800 truncate">{session.user.name}</p>
+            <p className="text-xs text-slate-400 truncate">{session.user.email}</p>
+          </div>
+          <div className="p-1">
+            <DropdownMenuItem
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="flex items-center gap-2 rounded-lg text-red-500 focus:text-red-500 focus:bg-red-50 cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign out
             </DropdownMenuItem>
-          </DeleteButton>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -49,22 +46,22 @@ export const UserButton = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
-          <AvatarImage src="" />
-          <AvatarFallback className="bg-sky-500">
-            <FcGoogle />
-          </AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger asChild>
+        <button className="focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-full">
+          <Avatar className="w-8 h-8">
+            <AvatarFallback className="bg-slate-200">
+              <FaUser className="w-3 h-3 text-slate-500" />
+            </AvatarFallback>
+          </Avatar>
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40" align="end">
+      <DropdownMenuContent className="w-48 rounded-xl" align="end">
         <DropdownMenuItem
-          onClick={() =>
-            signIn("google", { callbackUrl: DEFAULT_LOGON_REDIRECT })
-          }
+          onClick={() => signIn("google", { callbackUrl: DEFAULT_LOGON_REDIRECT })}
+          className="flex items-center gap-2 cursor-pointer"
         >
-          <FiLogIn className="h-4 w-4 mr-2" />
-          Login with Google
+          <FcGoogle className="w-4 h-4" />
+          Sign in with Google
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -95,8 +95,7 @@ export const {
       token.email = existingUser.email;
       //for seetting page
       token.role = existingUser.role;
-
-      //token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.hasProfile = !!(patientdata || staffdata || docdata || nursedata);
 
       return token;
     },
